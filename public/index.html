@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" id="form">
+      <input type="text" name="email" id="email" placeholder="email" />
+      <span id="emailError"></span>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="password"
+      />
+      <span id="passError"></span>
+      <button>Submit</button>
+      <span id="generalError"></span>
+    </form>
+    <script>
+      const emailErr = document.getElementById("emailError");
+      const passErr = document.getElementById("passError");
+      const generalErr = document.getElementById("generalError");
+
+      document.getElementById("form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        emailErr.innerText = "";
+        passErr.innerText = "";
+        generalErr.innerText = "";
+
+        const form = document.getElementById("form");
+        const formData = new FormData(form);
+        const email = formData.get("email");
+        const pass = formData.get("password");
+        console.log(email, pass);
+
+        try {
+          const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, pass }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok && data.errors) {
+            console.log("response not ok", data);
+
+            data.errors.forEach((error) => {
+              if (error.field === "email") {
+                emailErr.textContent = error.message;
+              } else if (error.field === "password")
+                passErr.textContent = error.message;
+            });
+            return;
+          }
+
+          if (res.ok) {
+            alert("Login successful");
+            form.reset();
+          }
+
+          alert(data.message);
+        } catch (error) {
+          console.error("Login error: ", error);
+
+          generalErr.textContent = "Network error please try again!!";
+        }
+      });
+    </script>
+  </body>
+</html>
