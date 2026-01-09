@@ -65,7 +65,7 @@ export async function postMovie(req, res) {
     });
   } catch (error) {
     console.log(error);
-    res.status(401).json({ success: false, message: "Something went wrong." });
+    res.status(404).json({ success: false, message: "Something went wrong." });
   }
 }
 
@@ -83,6 +83,13 @@ export async function updateMovie(req, res) {
       runValidators: true,
     });
 
+    if (!movie) {
+      return res.status(404).json({
+        success: false,
+        message: `Movie with the id ${req.params.id} does not exist!!`,
+      });
+    }
+
     res.status(200).json({
       success: true,
       message: "Movie updated successfully.",
@@ -92,17 +99,14 @@ export async function updateMovie(req, res) {
     });
   } catch (error) {
     console.error(error);
-    res.status(401).json({ success: false, message: error.message });
+    res.status(404).json({ success: false, message: error.message });
   }
 }
 
 // ------------------------- delete movie -----------------------------
 export async function deleteMovie(req, res) {
   try {
-    const movie = await Movie.findByIdAndDelete(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const movie = await Movie.findByIdAndDelete(req.params.id);
 
     if (!movie) {
       return res.status(401).json({
@@ -111,12 +115,12 @@ export async function deleteMovie(req, res) {
       });
     }
 
-    res.status(200).json({
+    res.status(204).json({
       success: true,
       message: "Movie deleted successfully.",
     });
   } catch (error) {
     console.error(error);
-    res.status(401).json({ success: false, message: error.message });
+    res.status(404).json({ success: false, message: error.message });
   }
 }

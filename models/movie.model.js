@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 
 const movieSchema = new mongoose.Schema({
   name: {
@@ -13,7 +13,34 @@ const movieSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    default: 1.0,
+  },
+  releaseYear: {
+    type: Number,
+    required: [true, "Release year is required field!"],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  genres: {
+    type: [String],
+    required: [true, "Genres is required field!"],
+  },
+  directors: {
+    type: [String],
+    required: [true, "Directors is required field!"],
+  },
+  poster: {
+    type: String,
+    required: [true, "Poster is required field!"],
+  },
+  actors: {
+    type: String,
+    required: [true, "Actors is required field!"],
+  },
+  collection: {
+    type: Number,
+    required: [true, "Price is required field!"],
   },
 });
 
