@@ -2,8 +2,8 @@ export function validateMovie(req, res, next) {
   const errors = [];
   if (!req.body.name)
     errors.push({ field: "movieName", message: "Movie name required!!" });
-  if (!req.body.release)
-    errors.push({ field: "releaseDate", message: "Release date required!!" });
+  if (!req.body.rating)
+    errors.push({ field: "rating", message: "Rating is required!!" });
   if (!req.body.duration)
     errors.push({ field: "duration", message: "Enter movie duration!!" });
 
