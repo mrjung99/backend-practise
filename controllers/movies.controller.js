@@ -1,4 +1,4 @@
-import fs from "fs";
+// import fs from "fs";
 import { Movie } from "../models/movie.model.js";
 
 //read file from data/movies.json
@@ -39,6 +39,10 @@ export async function getMovie(req, res) {
   try {
     // const movie = await Movie().find({_id:req.params.id})
     const movie = await Movie.findById(req.params.id);
+
+    if (!movie) {
+      res.status(401).json({ success: false, message: "Movie not found!!" });
+    }
 
     res.status(200).json({
       success: true,

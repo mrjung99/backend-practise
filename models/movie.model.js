@@ -5,11 +5,13 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: [true, "Name is required!!"],
     unique: true,
+    trim: true,
   },
   description: String,
   duration: {
     type: Number,
     required: [true, "Duration is required!!"],
+    trim: true,
   },
   rating: {
     type: Number,
