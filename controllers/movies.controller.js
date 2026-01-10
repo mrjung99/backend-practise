@@ -1,5 +1,6 @@
 // import fs from "fs";
 import { Movie } from "../models/movie.model.js";
+import qs from "qs";
 
 //read file from data/movies.json
 // const movies = JSON.parse(fs.readFileSync("./data/movies.json"));
@@ -20,7 +21,19 @@ import { Movie } from "../models/movie.model.js";
 //--------------- send all movies when get request ------------------
 export async function getAllMovies(req, res) {
   try {
-    const movies = await Movie.find();
+    let queryStr = JSON.stringify(req.query);
+    queryStr = queryStr.replace(/\b(lte|lt|gte|gt)\b/g, (match) => `$${match}`);
+    const queryObj = JSON.parse(queryStr);
+    console.log(queryObj);
+
+    const movies = await Movie.find(queryObj);
+
+    if (!movies || movies.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No Movies found!!" });
+    }
+
     res.status(200).json({
       success: true,
       length: movies.length,
@@ -73,7 +86,7 @@ export async function postMovie(req, res) {
   }
 }
 
-// -------------------- update movie (patch) -------------------
+// ------------------- update movie (patch) -------------------
 export async function updateMovie(req, res) {
   try {
     if (!req.body || Object.keys(req.body).length === 0) {
