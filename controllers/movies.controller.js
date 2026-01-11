@@ -20,8 +20,36 @@ import { Movie } from "../models/movie.model.js";
 //--------------- send all movies when get request ------------------
 export async function getAllMovies(req, res) {
   try {
-    const { name, sort } = req.query;
+    const { name, sort, select, numericFilter } = req.query;
     let queryObj = {};
+
+    //numberic filter
+    if (numericFilter) {
+      const operatorMap = {
+        "<": "$lt",
+        ">": "$gt",
+        "=": "$eq",
+        "<=": "$lte",
+        ">=": "$gte",
+      };
+
+      const regEx = /\b>|< | =|<= |>=\b/;
+      //earn>100 -> earn-$gt-100
+      let filters = numericFilter.replace(
+        regEx,
+        (match) => `-${operatorMap[match]}-`
+      );
+
+      const options = ["earn", "rating"];
+      //earn-$gt-100 --> [earn,$gt,100] or [field=earn, operator=$gt, value=100]
+      filters = filters.split(",").forEach((item) => {
+        const [field, operator, value] = item.split("-");
+
+        if (options.includes(field)) {
+          queryObj[field] = { [operator]: Number(value) };
+        }
+      });
+    }
 
     if (name) {
       queryObj.name = { $regex: name, $options: "i" };
@@ -29,9 +57,21 @@ export async function getAllMovies(req, res) {
 
     let results = Movie.find(queryObj);
 
+    //------ sorting-----
     if (sort) {
-      results.sort(sort.split(",").join(" "));
+      results = results.sort(sort.split(",").join(" "));
     }
+
+    //---select specific field
+    if (select) {
+      results = results.select(select.split(",").join(" "));
+    }
+
+    //----pagination
+    const page = Number(req.query.page || 1);
+    const limit = Number(req.query.limit || 10);
+    const skip = (page - 1) * limit;
+    results = results.skip(skip).limit(limit);
 
     const movies = await results;
 
