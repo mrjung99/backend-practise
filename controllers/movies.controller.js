@@ -1,6 +1,5 @@
 // import fs from "fs";
 import { Movie } from "../models/movie.model.js";
-import qs from "qs";
 
 //read file from data/movies.json
 // const movies = JSON.parse(fs.readFileSync("./data/movies.json"));
@@ -21,12 +20,20 @@ import qs from "qs";
 //--------------- send all movies when get request ------------------
 export async function getAllMovies(req, res) {
   try {
-    let queryStr = JSON.stringify(req.query);
-    queryStr = queryStr.replace(/\b(lte|lt|gte|gt)\b/g, (match) => `$${match}`);
-    const queryObj = JSON.parse(queryStr);
-    console.log(queryObj);
+    const { name, sort } = req.query;
+    let queryObj = {};
 
-    const movies = await Movie.find(queryObj);
+    if (name) {
+      queryObj.name = { $regex: name, $options: "i" };
+    }
+
+    let results = Movie.find(queryObj);
+
+    if (sort) {
+      results.sort(sort.split(",").join(" "));
+    }
+
+    const movies = await results;
 
     if (!movies || movies.length === 0) {
       return res

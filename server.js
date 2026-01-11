@@ -4,21 +4,21 @@ dotenv.config({ path: "./config.env" });
 
 //this app must be imported before dotenv
 import { app } from "./app.js";
+import { connectDB } from "./connectDB.js";
 
-//connect to mongodb
-mongoose
-  .connect(process.env.CONN_STR)
-  .then((conn) => {
-    // console.log(conn);
-    console.log("DB connection successful...");
-  })
-  .catch((err) => {
-    console.error("DB connection failed:", err.message);
-    process.exit(1); // Exit process on connection failure
-  });
-
-// create a server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at port ${PORT}`);
-});
+//connect to mongodb
+const startServer = async () => {
+  try {
+    await connectDB(process.env.CONN_STR);
+    console.log("Connection to DB successful...");
+
+    app.listen(PORT, () => {
+      console.log(`Server is running at port ${PORT}`);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+startServer();

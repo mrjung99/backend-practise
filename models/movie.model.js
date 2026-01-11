@@ -40,7 +40,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: [true, "Actors is required field!"],
   },
-  collection: {
+  earn: {
     type: Number,
     required: [true, "Price is required field!"],
   },

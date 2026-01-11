@@ -10,7 +10,7 @@
     "directors": ["Frank Darabont"],
     "poster": "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmRhMC00ZDIzLWFmNTEtODM1ZmRlYzY2YzEzXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_.jpg",
     "actors": "Tim Robbins, Morgan Freeman, Bob Gunton",
-    "collection": 28341469
+    "earn": 28341469
   },
   {
     "name": "The Godfather",
@@ -23,7 +23,7 @@
     "directors": ["Francis Ford Coppola"],
     "poster": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmYtYTAwOC00ZjQ5LWFmNTEtODM1ZmRlYzY2YzEzXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
     "actors": "Marlon Brando, Al Pacino, James Caan",
-    "collection": 246120974
+    "earn": 246120974
   },
   {
     "name": "The Dark Knight",
@@ -36,7 +36,7 @@
     "directors": ["Christopher Nolan"],
     "poster": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
     "actors": "Christian Bale, Heath Ledger, Aaron Eckhart",
-    "collection": 1004558444
+    "earn": 1004558444
   },
   {
     "name": "Pulp Fiction",
@@ -49,7 +49,7 @@
     "directors": ["Quentin Tarantino"],
     "poster": "https://m.media-amazon.com/images/M/MV5BZmU0Nzg1MjAtYzQ5Yy00NzQ1LWJjYjMtNjZmNDY3Y2QxYjUwXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
     "actors": "John Travolta, Uma Thurman, Samuel L. Jackson",
-    "collection": 213928762
+    "earn": 213928762
   },
   {
     "name": "Forrest Gump",
@@ -62,7 +62,7 @@
     "directors": ["Robert Zemeckis"],
     "poster": "https://m.media-amazon.com/images/M/MV5BMTkzODQ5NTkwNF5BMl5BanBnXkFtZTcwODcxMjEzMw@@._V1_.jpg",
     "actors": "Tom Hanks, Robin Wright, Gary Sinise",
-    "collection": 678226465
+    "earn": 678226465
   },
   {
     "name": "Inception",
@@ -75,7 +75,7 @@
     "directors": ["Christopher Nolan"],
     "poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwODI5OTM0Mw@@._V1_.jpg",
     "actors": "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page",
-    "collection": 836800000
+    "earn": 836800000
   },
   {
     "name": "The Matrix",
@@ -88,7 +88,7 @@
     "directors": ["Lana Wachowski", "Lilly Wachowski"],
     "poster": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3MzYtNDY3Zi00ZGM4LWFmNTEtODM1ZmRlZTE1NDhhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
     "actors": "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
-    "collection": 466364845
+    "earn": 466364845
   },
   {
     "name": "Gladiator",
@@ -101,7 +101,7 @@
     "directors": ["Ridley Scott"],
     "poster": "https://m.media-amazon.com/images/M/MV5BMTMxNTU1NjYxNl5BMl5BanBnXkFtZTYwNjUyNzY3._V1_.jpg",
     "actors": "Russell Crowe, Joaquin Phoenix, Connie Nielsen",
-    "collection": 460583960
+    "earn": 460583960
   },
   {
     "name": "Interstellar",
@@ -114,7 +114,7 @@
     "directors": ["Christopher Nolan"],
     "poster": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxMzQxMF5BMl5BanBnXkFtZTgwNjUxNzM1MTE@._V1_.jpg",
     "actors": "Matthew McConaughey, Anne Hathaway, Jessica Chastain",
-    "collection": 701729206
+    "earn": 701729206
   },
   {
     "name": "Fight Club",
@@ -127,6 +127,6 @@
     "directors": ["David Fincher"],
     "poster": "https://m.media-amazon.com/images/M/MV5BMmEzNjIwYjUtYzZiNy00ZjQ5LWFmNTEtODM1ZmRlZjY5OTUxXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_.jpg",
     "actors": "Brad Pitt, Edward Norton, Helena Bonham Carter",
-    "collection": 101209582
+    "earn": 101209582
   }
 ]
