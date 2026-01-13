@@ -208,3 +208,36 @@ export async function deleteMovie(req, res) {
     res.status(404).json({ success: false, message: error.message });
   }
 }
+
+// -----aggretation pipeline ----
+
+export async function getMovieStats(req, res) {
+  try {
+    const stat = await Movie.aggregate([
+      { $match: { rating: { $gte: 5 } } },
+      {
+        $group: {
+          _id: "$releaseYear",
+          maxPrice: { $max: "$earn" },
+          minPrice: { $min: "$earn" },
+          avgPrice: { $avg: "$earn" },
+          avgRating: { $avg: "$rating" },
+          maxRating: { $max: "$rating" },
+          minRating: { $min: "$rating" },
+        },
+      },
+      { $sort: { maxPrice: 1 } },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      length: stat.length,
+      data: {
+        stat,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ success: false, message: error.message });
+  }
+}

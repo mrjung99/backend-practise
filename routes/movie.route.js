@@ -3,6 +3,7 @@ import {
   deleteMovie,
   getAllMovies,
   getMovie,
+  getMovieStats,
   postMovie,
   updateMovie,
 } from "../controllers/movies.controller.js";
@@ -18,8 +19,11 @@ export const movieRoute = express.Router();
 
 movieRoute.route("/").get(getAllMovies).post(validateMovie, postMovie);
 
-// aliasing route ----> aliasing route means creating multiple URL paths (aliases) that all point to the same route handler. In other words, different routes behave the same way without duplicating code.
+//! aliasing route ----> aliasing route means creating multiple URL paths (aliases) that all point to the same route handler. In other words, different routes behave the same way without duplicating code.
 movieRoute.route("/highest-rated").get(highestRatedMovies, getAllMovies);
+
+//! aggregation pipeline ---> An aggregation pipeline is a MongoDB feature that processes data through multiple stages, where each stage transforms the documents before passing them to the next stage.
+movieRoute.route("/movie-stats").get(getMovieStats);
 
 movieRoute
   .route("/:id")
