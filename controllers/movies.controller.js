@@ -1,5 +1,6 @@
 // import fs from "fs";
 import { Movie } from "../models/movie.model.js";
+import { ApiFeatures } from "../utlis/ApiFeatures.js";
 
 //read file from data/movies.json
 // const movies = JSON.parse(fs.readFileSync("./data/movies.json"));
@@ -25,69 +26,76 @@ export async function getAllMovies(req, res) {
       ...req.filters,
     };
 
-    let queryObj = {};
+    const apiFeature = new ApiFeatures(Movie.find(), finalQuery)
+      .numericFilter()
+      .selectField()
+      .sort()
+      .paginate();
 
-    //numberic filter
-    if (finalQuery.numericFilter) {
-      const operatorMap = {
-        "<": "$lt",
-        ">": "$gt",
-        "=": "$eq",
-        "<=": "$lte",
-        ">=": "$gte",
-      };
+    const movies = await apiFeature.query;
 
-      const regEx = /\b(>=|<=|>|<|=)\b/g;
-      //earn>100 -> earn-$gt-100
-      let filters = finalQuery.numericFilter.replace(
-        regEx,
-        (match) => `-${operatorMap[match]}-`
-      );
+    // //*numberic filter
+    // let queryObj = {};
+    // if (finalQuery.numericFilter) {
+    //   const operatorMap = {
+    //     "<": "$lt",
+    //     ">": "$gt",
+    //     "=": "$eq",
+    //     "<=": "$lte",
+    //     ">=": "$gte",
+    //   };
 
-      const options = ["earn", "rating"];
-      //earn-$gt-100 --> [earn,$gt,100] or [field=earn, operator=$gt, value=100]
-      filters = filters.split(",").forEach((item) => {
-        const [field, operator, value] = item.split("-");
+    //   const regEx = /\b(>=|<=|>|<|=)\b/g;
+    //   //earn>100 -> earn-$gt-100
+    //   let filters = finalQuery.numericFilter.replace(
+    //     regEx,
+    //     (match) => `-${operatorMap[match]}-`
+    //   );
 
-        if (options.includes(field)) {
-          queryObj[field] = { [operator]: Number(value) };
-        }
-      });
-    }
+    //   const options = ["earn", "rating"];
+    //   //earn-$gt-100 --> [earn,$gt,100] or [field=earn, operator=$gt, value=100]
+    //   filters = filters.split(",").forEach((item) => {
+    //     const [field, operator, value] = item.split("-");
 
-    if (finalQuery.name) {
-      queryObj.name = { $regex: finalQuery.name, $options: "i" };
-    }
+    //     if (options.includes(field)) {
+    //       queryObj[field] = { [operator]: Number(value) };
+    //     }
+    //   });
+    // }
 
-    let results = Movie.find(queryObj);
+    // if (finalQuery.name) {
+    //   queryObj.name = { $regex: finalQuery.name, $options: "i" };
+    // }
 
-    //------ sorting-----
-    if (finalQuery.sort) {
-      results = results.sort(finalQuery.sort.split(",").join(" "));
-    }
+    // let results = Movie.find(queryObj);
 
-    //---select specific field
-    if (finalQuery.select) {
-      results = results.select(select.split(",").join(" "));
-    } else {
-      // "-__v" excludes the __v :0 fields which mongo automatically create at the db creation time
-      results = results.select("-__v");
-    }
+    // //*------ sorting-----
+    // if (finalQuery.sort) {
+    //   results = results.sort(finalQuery.sort.split(",").join(" "));
+    // }
 
-    //----pagination
-    const page = Number(finalQuery.page || 1);
-    const limit = Number(finalQuery.limit || 10);
-    const skip = (page - 1) * limit;
-    results = results.skip(skip).limit(limit);
+    // //*---select specific field
+    // if (finalQuery.select) {
+    //   results = results.select(select.split(",").join(" "));
+    // } else {
+    //   // "-__v" excludes the __v :0 fields which mongo automatically create at the db creation time
+    //   results = results.select("-__v");
+    // }
 
-    if (finalQuery.page) {
-      const movieCount = await Movie.countDocuments();
-      if (skip >= movieCount) {
-        throw new Error("No movies found on this page!!");
-      }
-    }
+    //*----pagination
+    // const page = Number(finalQuery.page || 1);
+    // const limit = Number(finalQuery.limit || 10);
+    // const skip = (page - 1) * limit;
+    // results = results.skip(skip).limit(limit);
 
-    const movies = await results;
+    // if (finalQuery.page) {
+    //   const movieCount = await Movie.countDocuments();
+    //   if (skip >= movieCount) {
+    //     throw new Error("No movies found on this page!!");
+    //   }
+    // }
+
+    // const movies = await results;
 
     if (!movies || movies.length === 0) {
       throw new Error("No movies found!!");

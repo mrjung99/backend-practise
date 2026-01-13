@@ -17,6 +17,8 @@ export const movieRoute = express.Router();
 // movieRoute.param("id", checkId);
 
 movieRoute.route("/").get(getAllMovies).post(validateMovie, postMovie);
+
+// aliasing route ----> aliasing route means creating multiple URL paths (aliases) that all point to the same route handler. In other words, different routes behave the same way without duplicating code.
 movieRoute.route("/highest-rated").get(highestRatedMovies, getAllMovies);
 
 movieRoute
