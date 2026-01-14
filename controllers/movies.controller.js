@@ -78,7 +78,7 @@ export async function getAllMovies(req, res) {
     // if (finalQuery.select) {
     //   results = results.select(select.split(",").join(" "));
     // } else {
-    //   // "-__v" excludes the __v :0 fields which mongo automatically create at the db creation time
+    // //"-__v" excludes the __v :0 fields which mongo automatically create at the db creation time
     //   results = results.select("-__v");
     // }
 
