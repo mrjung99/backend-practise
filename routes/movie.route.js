@@ -3,6 +3,7 @@ import {
   deleteMovie,
   getAllMovies,
   getMovie,
+  getMoviesByGenre,
   getMovieStats,
   postMovie,
   updateMovie,
@@ -24,7 +25,7 @@ movieRoute.route("/highest-rated").get(highestRatedMovies, getAllMovies);
 
 //! aggregation pipeline ---> An aggregation pipeline is a MongoDB feature that processes data through multiple stages, where each stage transforms the documents before passing them to the next stage.
 movieRoute.route("/movie-stats").get(getMovieStats);
-
+movieRoute.route("/movies-by-genre/:genre").get(getMoviesByGenre);
 movieRoute
   .route("/:id")
   .all(validateMovieId)

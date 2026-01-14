@@ -210,7 +210,6 @@ export async function deleteMovie(req, res) {
 }
 
 // -----aggretation pipeline ----
-
 export async function getMovieStats(req, res) {
   try {
     const stat = await Movie.aggregate([
@@ -234,6 +233,37 @@ export async function getMovieStats(req, res) {
       length: stat.length,
       data: {
         stat,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ success: false, message: error.message });
+  }
+}
+
+export async function getMoviesByGenre(req, res) {
+  try {
+    const genre = req.params.genre;
+    const movies = await Movie.aggregate([
+      { $unwind: "$genres" },
+      {
+        $group: {
+          _id: "$genres",
+          moviesCout: { $sum: 1 },
+          movies: { $push: "$name" },
+        },
+      },
+      { $addFields: { genre: "$_id" } },
+      { $project: { _id: 0 } },
+      { $sort: { moviesCout: -1 } },
+      { $match: { genre: genre } },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      length: movies.length,
+      data: {
+        movies,
       },
     });
   } catch (error) {
