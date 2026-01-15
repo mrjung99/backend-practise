@@ -18,7 +18,7 @@ import { ApiFeatures } from "../utlis/ApiFeatures.js";
 //   next();
 // }
 
-//--------------- send all movies when get request ------------------
+//*--------------- send all movies when get request ------------------
 export async function getAllMovies(req, res) {
   try {
     const finalQuery = {
@@ -114,7 +114,7 @@ export async function getAllMovies(req, res) {
   }
 }
 
-//---------------get movie with the id-----------
+//*---------------get movie with the id-----------
 export async function getMovie(req, res) {
   try {
     // const movie = await Movie().find({_id:req.params.id})
@@ -149,7 +149,7 @@ export async function postMovie(req, res) {
     });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ success: false, message: "Something went wrong." });
+    res.status(404).json({ success: false, message: error.message });
   }
 }
 
