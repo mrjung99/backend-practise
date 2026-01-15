@@ -225,7 +225,7 @@ export async function getMovieStats(req, res) {
           minRating: { $min: "$rating" },
         },
       },
-      { $sort: { maxPrice: 1 } },
+      { $sort: { _id: 1 } },
     ]);
 
     res.status(200).json({

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import fs from "fs";
+import { log } from "console";
 
 const movieSchema = new mongoose.Schema(
   {
@@ -91,6 +92,15 @@ movieSchema.post(/^find/, function () {
   fs.writeFileSync("./log/log.txt", content, { flag: "a" }, (err) => {
     console.log(err);
   });
+});
+
+//! aggregation middleware
+movieSchema.pre("aggregate", function () {
+  console.log(
+    this.pipeline().unshift({
+      $match: { releaseYear: { $lte: new Date().getFullYear() } },
+    })
+  );
 });
 
 export const Movie = mongoose.model("Movie", movieSchema);
