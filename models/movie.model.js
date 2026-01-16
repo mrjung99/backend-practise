@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import fs from "fs";
-import { log } from "console";
 
 const movieSchema = new mongoose.Schema(
   {
@@ -55,7 +54,7 @@ const movieSchema = new mongoose.Schema(
   }
 );
 
-//virtual properties
+//!virtual properties
 movieSchema.virtual("durationInHours").get(function () {
   return this.duration / 60;
 });
