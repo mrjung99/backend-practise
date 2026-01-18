@@ -1,6 +1,7 @@
 // import fs from "fs";
 import { Movie } from "../models/movie.model.js";
 import { ApiFeatures } from "../utlis/ApiFeatures.js";
+import { CustomError } from "../utlis/CustomError.js";
 
 //read file from data/movies.json
 // const movies = JSON.parse(fs.readFileSync("./data/movies.json"));
@@ -115,13 +116,17 @@ export async function getAllMovies(req, res) {
 }
 
 //*---------------get movie with the id-----------
-export async function getMovie(req, res) {
+export async function getMovie(req, res, next) {
   try {
     // const movie = await Movie().find({_id:req.params.id})
     const movie = await Movie.findById(req.params.id);
 
     if (!movie) {
-      res.status(401).json({ success: false, message: "Movie not found!!" });
+      const error = new CustomError(
+        404,
+        `Movie with the id ${req.params.id} is not found!!`,
+      );
+      return next(error);
     }
 
     res.status(200).json({

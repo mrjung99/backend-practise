@@ -51,7 +51,7 @@ const movieSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
 //!virtual properties
@@ -66,7 +66,7 @@ movieSchema.pre("save", function () {
 });
 
 movieSchema.post("save", function (doc) {
-  const content = `${doc.name} is created by ${doc.createdBy}`;
+  const content = `\n${doc.name} is created by ${doc.createdBy}`;
   // console.log(`${doc.name} is created by ${doc.createdBy}`);
   // here the {flag:"a"} is used to append the new log on previous log on the file if we dont do that it will rewrite the whole file
   fs.writeFileSync("./log/log.txt", content, { flag: "a" }, (err) => {
@@ -98,7 +98,7 @@ movieSchema.pre("aggregate", function () {
   console.log(
     this.pipeline().unshift({
       $match: { releaseYear: { $lte: new Date().getFullYear() } },
-    })
+    }),
   );
 });
 
