@@ -15,3 +15,4 @@ Query took 69 ms to fetch document.
 Query took 77 ms to fetch document.
 Query took 78 ms to fetch document.
 Query took 65 ms to fetch document.
+Query took 53 ms to fetch document.
