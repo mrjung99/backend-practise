@@ -16,7 +16,9 @@ const handleCastError = (error) => {
 };
 
 const handleRequiredError = (error) => {
-  return new CustomError(400, error.message);
+  const errors = Object.values(error.errors);
+  const errorMsg = errors.map((err) => err.message).join(". ");
+  return new CustomError(400, errorMsg);
 };
 
 const handleDuplicateError = (error) => {
@@ -25,6 +27,7 @@ const handleDuplicateError = (error) => {
     `Movie name ${error.keyValue.name} already exist, enter another one.`,
   );
 };
+
 const productionErrors = (res, error) => {
   if (error.isOperational) {
     res.status(error.statusCode).json({

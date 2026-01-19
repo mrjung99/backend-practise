@@ -17,6 +17,14 @@ const movieSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
+      validate: {
+        validator: function (value) {
+          return value >= 1 && value <= 10;
+        },
+        message: "Rating ({VALUE}) should be less than 10 and greater than 1.",
+      },
+      min: 1,
+      max: 10,
     },
     releaseYear: {
       type: Number,

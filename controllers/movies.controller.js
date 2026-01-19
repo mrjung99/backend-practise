@@ -4,22 +4,6 @@ import { ApiFeatures } from "../utlis/ApiFeatures.js";
 import { asyncErrorHandler } from "../utlis/asyncError.js";
 import { CustomError } from "../utlis/CustomError.js";
 
-//read file from data/movies.json
-// const movies = JSON.parse(fs.readFileSync("./data/movies.json"));
-
-//*fucntion to check id (middleware callback function)
-// export function checkId(req, res, next, value) {
-//   let findMovie = movies.filter((m) => m.id === Number(value));
-//   if (!findMovie) {
-//     return res.status(404).json({
-//       success: false,
-//       message: `Movies with the id ${value} not found!!`,
-//     });
-//   }
-
-//   next();
-// }
-
 //*--------------- send all movies when get request ------------------
 export const getAllMovies = asyncErrorHandler(async (req, res) => {
   const finalQuery = {
