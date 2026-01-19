@@ -12,7 +12,7 @@ export function validateMovie(req, res, next) {
 
   if (errors.length > 0) {
     return res.status(400).json({
-      success: false,
+      status: "fail",
       message: "Not a valid movie.",
       errors: errors,
     });
@@ -26,7 +26,7 @@ export function validateMovieId(req, res, next) {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res
       .status(401)
-      .json({ success: false, message: "Movie id is not valid!!" });
+      .json({ status: "fail", message: "Movie id is not valid!!" });
   }
 
   next();

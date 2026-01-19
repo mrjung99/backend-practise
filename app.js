@@ -13,18 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 //routes
 app.use("/api/movies", movieRoute);
 
-app.all(/.*/, (req, res, next) => {
-  // res.status(404).json({
-  //   success: false,
-  //   message: `Can't find ${req.originalUrl} on server.`,
-  // });
-
-  // const err = new Error(`Can't find ${req.originalUrl} on server.`);
-  // err.success = false;
-  // err.statusCode = 404;
-
-  const err = new CustomError(404, `Can't find ${req.originalUrl} on server.`);
-  next(err);
+app.all(/.*/, (req, res) => {
+  throw new CustomError(404, `Can't find ${req.originalUrl} on server.`);
 });
 
 //global error handling
