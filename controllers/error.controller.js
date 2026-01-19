@@ -16,16 +16,15 @@ const handleCastError = (error) => {
 };
 
 const handleRequiredError = (error) => {
-  const errors = Object.values(error.errors);
-  const errorMsg = errors.map((err) => err.message).join(". ");
-  return new CustomError(400, errorMsg);
+  const errors = {};
+  const errorMsg = Object.values(error.errors).forEach(
+    (err) => (errors[err.path] = err.message),
+  );
+  return new CustomError(400, "Validation error!!", errors);
 };
 
 const handleDuplicateError = (error) => {
-  return new CustomError(
-    400,
-    `Movie name ${error.keyValue.name} already exist, enter another one.`,
-  );
+  return new CustomError(400, `Movie name already exist, enter another one.`);
 };
 
 const productionErrors = (res, error) => {
@@ -34,6 +33,7 @@ const productionErrors = (res, error) => {
       status: error.status,
       statusCode: error.statusCode,
       message: error.message,
+      ...(error.errors && { errors: error.errors }),
     });
   } else {
     res
