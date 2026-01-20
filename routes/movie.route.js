@@ -9,7 +9,6 @@ import {
   updateMovie,
 } from "../controllers/movies.controller.js";
 import { highestRatedMovies } from "../middlewares/highestRatedMovie.middleware.js";
-import { validateMovieId } from "../middlewares/validateMovie.middleware.js";
 export const movieRoute = express.Router();
 
 // this middleware check the param with the name id and call the function checkeId

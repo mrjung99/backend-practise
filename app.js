@@ -2,6 +2,7 @@ import express from "express";
 import { movieRoute } from "./routes/movie.route.js";
 import { CustomError } from "./utlis/CustomError.js";
 import { globalErrorHandler } from "./controllers/error.controller.js";
+import { authRoute } from "./routes/auth.route.js";
 
 export const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //routes
 app.use("/api/movies", movieRoute);
+app.use("/api/users", authRoute);
 
 app.all(/.*/, (req, res) => {
   throw new CustomError(404, `Can't find ${req.originalUrl} on server.`);

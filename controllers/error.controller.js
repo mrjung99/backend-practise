@@ -24,7 +24,9 @@ const handleRequiredError = (error) => {
 };
 
 const handleDuplicateError = (error) => {
-  return new CustomError(400, `Movie name already exist, enter another one.`);
+  const dupKey = Object.keys(error.keyPattern);
+  const key = dupKey[0].charAt(0).toUpperCase() + dupKey[0].slice(1);
+  return new CustomError(400, `${key} is already taken, enter another one.`);
 };
 
 const productionErrors = (res, error) => {
