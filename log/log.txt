@@ -60,3 +60,6 @@ Query took 52 ms to fetch document.
 Query took NaN ms to fetch document.
 Query took 58 ms to fetch document.
 Query took 56 ms to fetch document.
+Query took 51 ms to fetch document.
+Query took 67 ms to fetch document.
+Query took 53 ms to fetch document.
