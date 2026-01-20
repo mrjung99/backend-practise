@@ -37,4 +37,9 @@ userSchema.pre("save", async function () {
   this.confirmPassword = undefined;
 });
 
+//instance method it is available for all the instances of User model
+userSchema.methods.comparePassword = async function (pswd, paswdDB) {
+  return bcrypt.compare(pswd, paswdDB);
+};
+
 export const User = mongoose.model("user", userSchema);
