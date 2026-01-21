@@ -9,12 +9,13 @@ import {
   updateMovie,
 } from "../controllers/movies.controller.js";
 import { highestRatedMovies } from "../middlewares/highestRatedMovie.middleware.js";
+import { authenticateUser } from "../middlewares/authenticate.user.middleware.js";
 export const movieRoute = express.Router();
 
 // this middleware check the param with the name id and call the function checkeId
 // movieRoute.param("id", checkId);
 
-movieRoute.route("/").get(getAllMovies).post(postMovie);
+movieRoute.route("/").get(authenticateUser, getAllMovies).post(postMovie);
 movieRoute.route("/:id").get(getMovie).patch(updateMovie).delete(deleteMovie);
 
 //! aliasing route ----> aliasing route means creating multiple URL paths (aliases) that all point to the same route handler. In other words, different routes behave the same way without duplicating code.

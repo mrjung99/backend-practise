@@ -1,6 +1,5 @@
 import { User } from "../models/user.model.js";
 import { asyncErrorHandler } from "../utlis/asyncError.js";
-import jwt from "jsonwebtoken";
 import { CustomError } from "../utlis/CustomError.js";
 import { generateJwtToken } from "../utlis/generateJwtToken.js";
 

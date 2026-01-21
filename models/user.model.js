@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
       message: "Password doesn't match, enter agian.",
     },
   },
+  passwordChangedAt: Date,
 });
 
 userSchema.pre("save", async function () {
@@ -40,6 +41,16 @@ userSchema.pre("save", async function () {
 //instance method it is available for all the instances of User model
 userSchema.methods.comparePassword = async function (pswd, paswdDB) {
   return bcrypt.compare(pswd, paswdDB);
+};
+
+//check if the password is changed(instance method)
+userSchema.methods.isPasswordChanged = async function (jwtTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimeStamp = Number(this.passwordChangedAt.getTime() / 1000);
+    console.log(jwtTimestamp, changedTimeStamp);
+    return jwtTimestamp < changedTimeStamp;
+  }
+  return false;
 };
 
 export const User = mongoose.model("user", userSchema);

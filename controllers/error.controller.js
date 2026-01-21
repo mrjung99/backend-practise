@@ -29,6 +29,14 @@ const handleDuplicateError = (error) => {
   return new CustomError(400, `${key} is already taken, enter another one.`);
 };
 
+const handleExpredJwt = (error) => {
+  return new CustomError(401, "Token exprired, please login again!!");
+};
+
+const handleWebTokenError = (error) => {
+  return new CustomError(401, "Invalid token please login again!!");
+};
+
 const productionErrors = (res, error) => {
   if (error.isOperational) {
     res.status(error.statusCode).json({
@@ -54,6 +62,8 @@ export const globalErrorHandler = (error, req, res, next) => {
     if (error.name === "CastError") error = handleCastError(error);
     if (error.name === "ValidationError") error = handleRequiredError(error);
     if (error.code === 11000) error = handleDuplicateError(error);
+    if (error.name === "TokenExpiredError") error = handleExpredJwt(error);
+    if (error.name === "JsonWebTokenError") error = handleWebTokenError(error);
 
     productionErrors(res, error);
   }
